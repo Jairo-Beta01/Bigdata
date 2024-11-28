@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análisis de Casos por Establecimiento, Provincia y Distrito</title>
+    <title>Dashboard - Menú lateral ocultable</title>
     <link rel="icon" href="1.png" type="image/x-icon">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
@@ -19,11 +20,11 @@
             display: flex;
             background-color: #f8e1e7;
             min-height: 100vh;
-            margin: 0;
+            flex-direction: column;
         }
 
         .sidebar {
-            background-color: #e91e63;
+            background-color: #ee5386;
             color: white;
             width: 250px;
             padding: 20px;
@@ -31,6 +32,12 @@
             flex-direction: column;
             align-items: center;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto; /* Habilita el scroll vertical */
         }
 
         .sidebar h2 {
@@ -39,28 +46,47 @@
             text-align: center;
         }
 
+        .sidebar img.logo {
+            width: 150px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
         .sidebar nav {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 15px;
         }
 
         .sidebar button {
-            width: 100%;
+            width: 80%;
             padding: 10px;
-            margin: 5px 0;
             font-size: 16px;
             color: white;
-            background-color: #ff4081;
+            background-color: #e91e63;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
         }
 
         .sidebar button:hover {
             background-color: #ff80ab;
+        }
+
+        .sidebar button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .sidebar .hide-sidebar-btn {
+            margin-top: auto;
+            margin-bottom: 20px;
         }
 
         .container {
@@ -68,9 +94,11 @@
             padding: 20px;
             background-color: white;
             border-radius: 12px;
-            margin: 20px;
+            margin-left: 250px;
+            margin-top: 20px;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: margin-left 0.3s ease-in-out;
         }
 
         h1 {
@@ -82,39 +110,201 @@
 
         iframe {
             width: 100%;
-            height: 80vh;
+            height: 90vh;
             border: none;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+
+        /* Media Queries para hacer la página responsiva */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+                padding: 15px;
+            }
+
+            .sidebar button {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .container {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            iframe {
+                height: 70vh;
+            }
+
+            .sidebar.hide {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 250px;
+                position: absolute;
+                height: 100%;
+                top: 0;
+                left: -250px;
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.show {
+                transform: translateX(250px);
+            }
+
+            .menu-toggle {
+                display: block;
+                background-color: #ee5386;
+                color: white;
+                font-size: 18px;
+                padding: 10px;
+                border: none;
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                border-radius: 5px;
+                z-index: 10;
+            }
+
+            .sidebar button {
+                width: 100%;
+                padding: 12px;
+                text-align: center;
+                display: none;
+            }
+
+            .sidebar.show button {
+                display: block;
+            }
+
+            .container {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            iframe {
+                height: 60vh;
+            }
+        }
+
+        /* Para pantallas grandes (ocultar la franja lateral) */
+        @media (min-width: 769px) {
+            .sidebar {
+                display: flex;
+            }
+
+            .sidebar.hide {
+                display: none;
+            }
+
+            .container.full-screen {
+                margin-left: 0;
+            }
+
+            .toggle-sidebar-btn {
+                display: block;
+                background-color: #ee5386;
+                color: white;
+                font-size: 18px;
+                padding: 10px;
+                border: none;
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                border-radius: 5px;
+                z-index: 10;
+            }
+        }
+
     </style>
     <script>
-        function showDashboard(link) {
+        function showContent(contentType) {
             const container = document.getElementById('content');
+            let url = '';
+            let title = '';
+
+            switch (contentType) {
+                case 'principal':
+                    container.innerHTML = `
+                        <div class="text-content">
+                            <img src="image1.png" alt="Violencia contra la mujer">
+                            <h1>Violencia Contra la Mujer</h1>
+                            <p>La violencia contra la mujer es un problema global que afecta a millones de personas en todas las culturas y niveles socioeconómicos. Es crucial fomentar la educación, crear políticas efectivas y brindar apoyo a las víctimas para erradicar esta problemática.</p>
+                        </div>
+                    `;
+                    return;
+                case 'dashboard1':
+                    url = "https://app.powerbi.com/view?r=eyJrIjoiNTliMDc1NzMtZDEzNy00NDQwLWJlMDEtNmQ4N2JiMjY4ZWJjIiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
+                    title = "";
+                    break;
+                case 'dashboard2':
+                    url = "https://app.powerbi.com/view?r=eyJrIjoiYjU5ZjBhNjktNjYwZS00ZGViLWJhYzgtOTMwMGY5NTJmYTA5IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
+                    title = "";
+                    break;
+                case 'dashboard3':
+                    url = "https://app.powerbi.com/view?r=eyJrIjoiODY3NjcwNTktZTVjMy00NWUzLWEyODYtZjlkOWI5ZDU1MDg3IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
+                    title = "";
+                    break;
+                case 'dashboard4':
+                    url = "https://app.powerbi.com/view?r=eyJrIjoiMDRmZDViZDAtZTNhYS00ZmNmLTk3NjUtMjQ4NDhkY2Y2MGY2IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
+                    title = "";
+                    break;
+                default:
+                    container.innerHTML = "<h1>Contenido no disponible</h1>";
+                    return;
+            }
+
             container.innerHTML = `
-                <h1>Análisis de Casos por Establecimiento, Provincia y Distrito</h1>
-                <iframe title="Casos por establecimiento, provincia y distrito" src="${link}" allowFullScreen="true"></iframe>
+                <h1>${title}</h1>
+                <iframe src="${url}"></iframe>
             `;
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const container = document.querySelector('.container');
+            sidebar.classList.toggle('hide');
+            container.classList.toggle('full-screen');
         }
     </script>
 </head>
 
 <body>
-    <aside class="sidebar">
-        <h2>Análisis de la Violencia Contra la Mujer</h2>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰ Menú</button>
+
+    <aside class="sidebar show">
+        <img src="image2.png" alt="Logo" class="logo">
+        <h2>Menú</h2>
         <nav>
-            <button onclick="window.location.href='index.html'">Inicio</button>
-            <button onclick="showDashboard('https://app.powerbi.com/view?r=eyJrIjoiNTliMDc1NzMtZDEzNy00NDQwLWJlMDEtNmQ4N2JiMjY4ZWJjIiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9')">Principal</button>
-            <button onclick="showDashboard('https://app.powerbi.com/view?r=eyJrIjoiNTliMDc1NzMtZDEzNy00NDQwLWJlMDEtNmQ4N2JiMjY4ZWJjIiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9')">Dashboard 1</button>
-            <button onclick="showDashboard('https://app.powerbi.com/view?r=eyJrIjoiYjU5ZjBhNjktNjYwZS00ZGViLWJhYzgtOTMwMGY5NTJmYTA5IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9')">Dashboard 2</button>
-            <button onclick="showDashboard('https://app.powerbi.com/view?r=eyJrIjoiODY3NjcwNTktZTVjMy00NWUzLWEyODYtZjlkOWI5ZDU1MDg3IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9')">Dashboard 3</button>
-            <button onclick="showDashboard('https://app.powerbi.com/view?r=eyJrIjoiMDRmZDViZDAtZTNhYS00ZmNmLTk3NjUtMjQ4NDhkY2Y2MGY2IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9')">Dashboard 4</button>
+            <button onclick="showContent('principal')">
+                <img src="1035819.png" alt=""> Principal
+            </button>
+            <button onclick="showContent('dashboard1')">
+                <img src="1035819.png" alt=""> Dashboard 1
+            </button>
+            <button onclick="showContent('dashboard2')">
+                <img src="1035819.png" alt=""> Dashboard 2
+            </button>
+            <button onclick="showContent('dashboard3')">
+                <img src="1035819.png" alt=""> Dashboard 3
+            </button>
+            <button onclick="showContent('dashboard4')">
+                <img src="1035819.png" alt=""> Dashboard 4
+            </button>
+            <button class="hide-sidebar-btn" onclick="toggleSidebar()">
+                <img src="1035819.png" alt="Ocultar"> Ocultar Menú
+            </button>
         </nav>
     </aside>
 
     <div class="container" id="content">
-        <h1>Análisis de Casos por Establecimiento, Provincia y Distrito</h1>
-        <iframe title="Casos por establecimiento, provincia y distrito" src="https://app.powerbi.com/reportEmbed?reportId=11926350-6bb4-48a7-acf9-f9306bcc0cb4&autoAuth=true&ctid=154d9466-5fd4-442a-bb6d-f683bbf5231f" allowFullScreen="true"></iframe>
+        <!-- El contenido se cargará dinámicamente aquí -->
     </div>
 </body>
 
