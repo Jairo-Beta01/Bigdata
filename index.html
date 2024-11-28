@@ -188,6 +188,26 @@
                 height: 60vh;
             }
         }
+
+        /* Cuando el dispositivo está en modo horizontal (ancho mayor que alto) */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .sidebar {
+                width: 200px; /* Sidebar más pequeño para dejar espacio para el contenido */
+            }
+
+            .container {
+                margin-left: 200px; /* Ajusta el espacio del contenido */
+            }
+
+            .menu-toggle {
+                display: block; /* Asegura que el botón siempre esté visible */
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                z-index: 100;
+            }
+        }
+
     </style>
     <script>
         function showContent(contentType) {
@@ -224,26 +244,26 @@
             }
 
             container.innerHTML = `
-                <h1>${title}</h1>
-                <iframe title="${title}" src="${url}" allowFullScreen="true"></iframe>
+                <div class="text-content">
+                    <iframe src="${url}"></iframe>
+                    <h1>${title}</h1>
+                </div>
             `;
         }
 
         function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('show');
+            document.querySelector('.sidebar').classList.toggle('show');
         }
     </script>
 </head>
-
 <body>
-    <button class="menu-toggle" onclick="toggleSidebar()">☰ Menú</button>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
     <aside class="sidebar">
-        <img src="image2.png" alt="Logo" class="logo">
-        <h2>Análisis de la Violencia Contra la Mujer</h2>
+        <img class="logo" src="image2.png".png" alt="Logo">
+        <h2>Establecimientos</h2>
         <nav>
             <button onclick="showContent('principal')">
-                <img src="1035819.png" alt="Principal">
+                <img src="1035819.png" alt="">
                 Principal
             </button>
             <button onclick="showContent('dashboard1')">
@@ -273,3 +293,4 @@
     </main>
 </body>
 </html>
+
