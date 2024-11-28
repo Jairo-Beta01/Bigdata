@@ -117,7 +117,6 @@
         }
 
         /* Media Queries para hacer la página responsiva */
-
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px;
@@ -153,6 +152,7 @@
                 transform: translateX(250px); /* Mueve el sidebar completamente dentro */
             }
 
+            /* Aseguramos que el botón de menú esté siempre visible y sobre el contenido */
             .menu-toggle {
                 display: block;
                 background-color: #ee5386;
@@ -165,7 +165,7 @@
                 top: 20px;
                 left: 20px;
                 border-radius: 5px;
-                z-index: 10;
+                z-index: 100; /* Aseguramos que el botón esté por encima del contenido */
             }
 
             .sidebar button {
@@ -207,19 +207,19 @@
                     return;
                 case 'dashboard1':
                     url = "https://app.powerbi.com/view?r=eyJrIjoiNTliMDc1NzMtZDEzNy00NDQwLWJlMDEtNmQ4N2JiMjY4ZWJjIiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
-                    title = "";
+                    title = "Dashboard 1";
                     break;
                 case 'dashboard2':
                     url = "https://app.powerbi.com/view?r=eyJrIjoiYjU5ZjBhNjktNjYwZS00ZGViLWJhYzgtOTMwMGY5NTJmYTA5IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
-                    title = "";
+                    title = "Dashboard 2";
                     break;
                 case 'dashboard3':
                     url = "https://app.powerbi.com/view?r=eyJrIjoiODY3NjcwNTktZTVjMy00NWUzLWEyODYtZjlkOWI5ZDU1MDg3IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
-                    title = "";
+                    title = "Dashboard 3";
                     break;
                 case 'dashboard4':
                     url = "https://app.powerbi.com/view?r=eyJrIjoiMDRmZDViZDAtZTNhYS00ZmNmLTk3NjUtMjQ4NDhkY2Y2MGY2IiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9";
-                    title = "";
+                    title = "Dashboard 4";
                     break;
             }
 
@@ -264,11 +264,12 @@
             </button>
         </nav>
     </aside>
-
-    <div class="container" id="content">
-        <h1>Análisis de Casos por Establecimiento, Provincia y Distrito</h1>
-        <iframe title="Casos por establecimiento, provincia y distrito" src="https://app.powerbi.com/view?r=eyJrIjoiNTliMDc1NzMtZDEzNy00NDQwLWJlMDEtNmQ4N2JiMjY4ZWJjIiwidCI6IjE1NGQ5NDY2LTVmZDQtNDQyYS1iYjZkLWY2ODNiYmY1MjMxZiIsImMiOjR9" allowFullScreen="true"></iframe>
-    </div>
+    <main class="container" id="content">
+        <div class="text-content">
+            <img src="image1.png" alt="Violencia contra la mujer">
+            <h1>Violencia Contra la Mujer</h1>
+            <p>La violencia contra la mujer es un problema global que afecta a millones de personas en todas las culturas y niveles socioeconómicos. Es crucial fomentar la educación, crear políticas efectivas y brindar apoyo a las víctimas para erradicar esta problemática.</p>
+        </div>
+    </main>
 </body>
 </html>
-
