@@ -231,7 +231,7 @@
 
             switch (contentType) {
                 case 'principal':
-                    container.innerHTML = `
+                    container.innerHTML = ` 
                         <div class="text-content">
                             <img src="5.png" alt="Violencia contra la mujer">
                             <h1>Violencia Contra la Mujer</h1>
@@ -264,6 +264,11 @@
                 <h1>${title}</h1>
                 <iframe src="${url}"></iframe>
             `;
+        }
+
+        // Llamar a showContent cuando se cargue la página
+        window.onload = function() {
+            showContent('principal');
         }
 
         function toggleSidebar() {
